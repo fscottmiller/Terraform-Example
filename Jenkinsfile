@@ -15,7 +15,7 @@ def jsonToHtml(json) {
 // 	</body>
 // </html>
 // """
-	def html = "<html><body><p>${JsonOutput.prettyPrint json}</p></body></html>"
+	def html = "<html><body><p>${json}</p></body></html>"
 	return html
 }
 
