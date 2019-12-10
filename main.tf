@@ -8,7 +8,7 @@ variable "creds" {
 
 provider "google" {
   credentials = var.creds
-  project     = "${var.project}"
+  project     = var.project
   region      = "us-central1"
 }
 
