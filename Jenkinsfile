@@ -12,10 +12,8 @@ kubepipe {
 				terraform 'plan -out=myplan'
 			}
 		}
-		def plan = readJSON(text: terraform('show -json myplan'))
-		writeJSON file: 'index.html', json: plan, pretty: true
-		sh "echo '<html><body>\$(cat index.html)</body></html>' > index.html"
-		// writeFile file: "index.html", text: "<html><body>${readFile(text: terraform('show -json myplan'))['resource_changes']}</body></html>"
+		def plan = terraform('show -json myplan')
+		writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>')}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
