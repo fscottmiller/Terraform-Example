@@ -1,21 +1,21 @@
-variable "project" {
-    type = string
-}
-
-variable "creds" {
-  type = string
-}
-
 provider "google" {
   credentials = var.creds
   project     = var.project
   region      = "us-central1"
 }
 
+variable "project" {
+  type = string
+}
+
+variable "creds" {
+  type = string
+}
+
 resource "google_container_cluster" "primary" {
   name               = "terraform-test-cluster"
-  location           = "us-central1-a"
-  initial_node_count = 3
+  location           = "us-central1-b"
+  initial_node_count = 1
 
   master_auth {
     username = ""
