@@ -1,6 +1,22 @@
 @Library('jenkins-ext@master') _
 import groovy.json.JsonOutput
 
+def jsonToHtml(json) {
+	def html = """
+<html>
+	<body>
+		<div id='test'></div>
+		<script type='text/javascript' src='https://raw.githubusercontent.com/caldwell/renderjson/master/renderjson.js'>
+		<script>
+			document.getElementById("test").appendChild(
+				renderjson(${json})
+			);
+		</script>
+	</body>
+</html>
+"""
+}
+
 require 'terraform'
 initialize this
 
@@ -12,7 +28,8 @@ kubepipe {
 			sh "set TF_VAR_creds='${gcp}'"
 			terraform 'init'
 			terraform 'plan -out=myplan'
-			def plan = "<html><body><p>${JsonOutput.prettyPrint(terraform('show -json myplan'))}</p></body></html>"
+			def plan = terraform('show -json myplan')
+			def html = jsonToHtml(readJson(text: plan))
 			writeFile file: "index.html", text: plan
 		}
 	}
