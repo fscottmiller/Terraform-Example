@@ -14,7 +14,7 @@ kubepipe {
 		}
 		def plan = terraform 'show -json myplan'
 		writeJSON file: 'index.html', json: plan, pretty: true
-		sh "echo '<html><body>$(cat index.html)</body></html>' > index.html"
+		sh "echo '<html><body>\$(cat index.html)</body></html>' > index.html"
 		// writeFile file: "index.html", text: "<html><body>${readFile(text: terraform('show -json myplan'))['resource_changes']}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
