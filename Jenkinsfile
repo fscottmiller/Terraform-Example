@@ -17,7 +17,7 @@ kubepipe {
 		def html = "<html><body>${readFile file: 'index.html'}</body></html>"
 		html = html.replace("\n","<br>")
 		def parsing = html.split("<br>")
-		echo "${parsing.length()}"
+		echo "${parsing.length}"
 		def tabCount = 0
 		parsing.each {
 			it = "  "*tabCount + parsing
