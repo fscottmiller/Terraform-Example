@@ -1,5 +1,5 @@
 @Library('jenkins-ext@master') _
-import groovy.json.JSON
+import groovy.json.JsonOutput
 
 def jsonToHtml(json) {
 // 	def html = """
@@ -15,7 +15,7 @@ def jsonToHtml(json) {
 // 	</body>
 // </html>
 // """
-	def html = "<html><body><p>${JSON.stringify(json)}</p></body></html>"
+	def html = "<html><body><p>${JsonOutput.prettyPrint json}</p></body></html>"
 	return html
 }
 
