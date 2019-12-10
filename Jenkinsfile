@@ -7,7 +7,7 @@ def jsonToHtml(json, l=0) {
 		text += "${json}\n"
 	} else {
 		json.each { key, value ->
-			text += "${l*'\t'}${key}:\n"
+			text += "\t"*l + "${key}:\n"
 			text += jsonToHtml(value, l+1)
 		}
 	}
