@@ -4,18 +4,16 @@ require 'terraform'
 initialize this
 
 kubepipe {
-	stage('tf plan') {
+	stage('Plan') {
 		git url: "https://github.com/fscottmiller/Terraform-Example"
+		sh "set TF_VAR_project=ordinal-motif-254101"
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-			sh "set TF_VAR_project=ordinal-motif-254101"
 			sh "set TF_VAR_creds='${gcp}'"
-			terraform 'init'
-			terraform 'plan -out=myplan'
-			def plan = terraform 'show -json myplan'
-			writeFile file: "index.html", text: "<html><body>${plan}</body></html>"
 		}
-	}
-	stage('report') {
+		terraform 'init'
+		terraform 'plan -out=myplan'
+		def plan = terraform 'show -json myplan'
+		writeFile file: "index.html", text: "<html><body>${plan}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
@@ -25,10 +23,12 @@ kubepipe {
 			reportName: "Plan"
 		])
 	}
-	stage('confirm') {
+	stage('Apply') {
 		input "Do you want to continue?\nView your planned infrastucture: ${BUILD_URL}Plan"
-
-		def plan = terraform 'show -json myplan'
-		input "Do you want to continue?\n${plan}"
+		terraform 'apply myplan -auto-approve'
+	}
+	stage('Destroy') {
+		input 'Destroy now?'
+		terraform 'destroy -auto-approve'
 	}
 }
