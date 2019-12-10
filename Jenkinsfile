@@ -1,4 +1,5 @@
 @Library('jenkins-ext@master') _
+import groovy.json.JsonOutput
 
 require 'terraform'
 initialize this
@@ -11,7 +12,7 @@ kubepipe {
 			sh "set TF_VAR_creds='${gcp}'"
 			terraform 'init'
 			terraform 'plan -out=myplan'
-			def plan = "<html><body><p>${terraform 'show -json myplan'}</p></body></html>"
+			def plan = "<html><body><p>${JsonOutput.prettyPrint(terraform('show -json myplan'))}</p></body></html>"
 			writeFile file: "index.html", text: plan
 		}
 	}
