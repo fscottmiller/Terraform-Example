@@ -12,7 +12,8 @@ kubepipe {
 			echo "${gcp}"
 			sh "set TF_VAR_creds='${gcp}'"
 			echo "${terraform 'init'}"
-			echo "${terraform 'plan'}"
+			def plan = terraform 'plan'
+			input "${plan}"
 		}
 	}
 }
