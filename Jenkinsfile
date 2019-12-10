@@ -14,23 +14,21 @@ kubepipe {
 		}
 		def plan = readJSON text: terraform('show -json myplan')
 		writeJSON file: 'index.html', json: plan['resource_changes'], pretty: 1
-		def html = "<html><body>${readFile file: 'index.html'}</body></html>"
-		html.each {
-			println it
-		}
-		// html = html.replace("\n","<br>")
-		def parsing = html.split("\n")
-		def tabCount = 0
-		parsing.each {
-			it = "  "*tabCount + parsing
-			if (parsing.contains("{")) {
-				tabCount += 1
-			}
-			if (parsing.contains("}")) {
-				tabCount -= 1
-			}
-		}
-		writeFile file: 'index.html', text: parsing.join("<br>")
+		def html = "<pre>${readFile file: 'index.html'}</pre>"
+		// def html = "<html><body>${readFile file: 'index.html'}</body></html>"
+		// // html = html.replace("\n","<br>")
+		// def parsing = html.split("\n")
+		// def tabCount = 0
+		// parsing.each {
+		// 	it = "  "*tabCount + parsing
+		// 	if (parsing.contains("{")) {
+		// 		tabCount += 1
+		// 	}
+		// 	if (parsing.contains("}")) {
+		// 		tabCount -= 1
+		// 	}
+		// }
+		// writeFile file: 'index.html', text: parsing.join("<br>")
 		// writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>').replace('\\"','\"')}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
@@ -42,7 +40,7 @@ kubepipe {
 		])
 	}
 	stage('Apply') {
-		input "Do you want to continue?\nView your planned infrastucture: ${BUILD_URL}Plan"
+		input "Do you want to continue?\nView your planned infrastucture:\n${BUILD_URL}Plan"
 		terraform 'apply -auto-approve myplan'
 	}
 	stage('Destroy') {
