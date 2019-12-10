@@ -6,14 +6,15 @@ initialize this
 kubepipe {
 	stage('Plan') {
 		git url: "https://github.com/fscottmiller/Terraform-Example"
-		sh "set TF_VAR_project=ordinal-motif-254101"
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-			sh "set TF_VAR_creds='${gcp}'"
+			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}"]) {
+				terraform 'init'
+				terraform 'plan -out=myplan'
+			}
 		}
-		terraform 'init'
-		terraform 'plan -out=myplan'
-		def plan = terraform 'show -json myplan'
-		writeFile file: "index.html", text: "<html><body>${plan}</body></html>"
+		
+		// def plan = terraform 'show -json myplan'
+		writeFile file: "index.html", text: "<html><body>${terraform 'show -json myplan'}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
