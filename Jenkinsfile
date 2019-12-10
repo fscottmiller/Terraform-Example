@@ -30,7 +30,7 @@ kubepipe {
 			terraform 'init'
 			terraform 'plan -out=myplan'
 			def plan = terraform('show -json myplan')
-			def html = jsonToHtml(readJson(text: plan))
+			def html = jsonToHtml(readJSON(text: plan))
 			writeFile file: "index.html", text: plan
 		}
 	}
