@@ -17,7 +17,6 @@ kubepipe {
 		def html = "<html><body>${readFile file: 'index.html'}</body></html>"
 		html = html.replace("\n","<br>")
 		def parsing = html.split("<br>")
-		echo "${parsing.length}"
 		def tabCount = 0
 		parsing.each {
 			it = "  "*tabCount + parsing
@@ -28,7 +27,7 @@ kubepipe {
 				tabCount -= 1
 			}
 		}
-		writeFile file: 'index.html', text: parsing
+		writeFile file: 'index.html', text: parsing.join()
 		// writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>').replace('\\"','\"')}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
