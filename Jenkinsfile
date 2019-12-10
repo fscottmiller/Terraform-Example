@@ -13,7 +13,7 @@ kubepipe {
 			}
 		}
 		def plan = readJSON text: terraform('show -json myplan')
-		writeJSON file: 'index.html', json: plan['resource_changes'], pretty: true
+		writeJSON file: 'index.html', json: plan['resource_changes'], pretty: 1
 		def html = "<html><body>${readFile file: 'index.html'}</body></html>"
 		writeFile file: 'index.html', text: html
 		// writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>').replace('\\"','\"')}</body></html>"
