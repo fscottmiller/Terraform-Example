@@ -15,7 +15,19 @@ kubepipe {
 		def plan = readJSON text: terraform('show -json myplan')
 		writeJSON file: 'index.html', json: plan['resource_changes'], pretty: 1
 		def html = "<html><body>${readFile file: 'index.html'}</body></html>"
-		writeFile file: 'index.html', text: html.replace("\n","<br>")
+		html = html.replace("\n","<br>")
+		def parsing = html.split("<br>")
+		def tabCount = 0
+		parsing.each {
+			it = "  "*tabCount + parsing
+			if (parsing.contains("{")) {
+				tabCount += 1
+			}
+			if (parsing.contains("}")) {
+				tabCount -= 1
+			}
+		}
+		writeFile file: 'index.html', text: parsing.join()
 		// writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>').replace('\\"','\"')}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
