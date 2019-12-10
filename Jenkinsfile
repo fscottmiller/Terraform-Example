@@ -11,7 +11,7 @@ kubepipe {
 			sh "set TF_VAR_creds='${gcp}'"
 			terraform 'init'
 			def plan = "<html><body><p>${terraform 'plan'}</p></body></html>"
-			writeFile file: "index.html", data: plan
+			writeFile file: "index.html", text: plan
 		}
 	}
 	stage('confirm') {
