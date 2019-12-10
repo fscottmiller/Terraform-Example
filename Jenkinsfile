@@ -14,7 +14,7 @@ kubepipe {
 		}
 		
 		// def plan = terraform 'show -json myplan'
-		writeFile file: "index.html", text: "<html><body>${terraform 'show -json myplan'}</body></html>"
+		writeFile file: "index.html", text: "<html><body>${readJSON(terraform 'show -json myplan')['resource_changes']}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
