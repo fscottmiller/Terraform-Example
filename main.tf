@@ -7,7 +7,7 @@ variable "creds" {
 }
 
 provider "google" {
-  credentials = "${file("${var.creds}")}"
+  credentials = var.creds
   project     = var.project
   region      = "us-central1"
 }
