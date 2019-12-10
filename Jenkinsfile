@@ -5,7 +5,10 @@ initialize this
 
 kubepipe {
 	stage('tf plan') {
-		sh 'set TF_VAR_project=ordinal-motif-254101'
-		echo "${terraform 'plan'}"
+		withCredentials([string(credentialsId: 'gcp', variable: 'gcp')]) {
+			sh "set TF_VAR_project=ordinal-motif-254101"
+			sh "set TF_VAR_creds=${gcp}"
+			echo "${terraform 'plan'}"
+		}
 	}
 }
