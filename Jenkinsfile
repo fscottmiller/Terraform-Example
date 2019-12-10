@@ -4,7 +4,8 @@ require 'terraform'
 initialize this
 
 kubepipe {
-	stage('get tf version') {
-		echo "${terraform '--version'}"
+	stage('tf plan') {
+		terraform 'set TF_VAR_project=ordinal-motif-254101'
+		echo "${terraform 'plan'}"
 	}
 }
