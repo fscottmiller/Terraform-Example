@@ -2,12 +2,12 @@ variable "project" {
     type = string
 }
 
-variable "gcp" {
+variable "creds" {
   type = string
 }
 
 provider "google" {
-  credentials = "${file("${var.gcp}")}"
+  credentials = var.creds
   project     = "${var.project}"
   region      = "us-central1"
 }
