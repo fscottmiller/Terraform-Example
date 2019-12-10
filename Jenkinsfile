@@ -5,15 +5,24 @@ initialize this
 
 kubepipe {
 	stage('tf plan') {
-		sh "env"
 		git url: "https://github.com/fscottmiller/Terraform-Example"
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
 			sh "set TF_VAR_project=ordinal-motif-254101"
-			echo "${gcp}"
 			sh "set TF_VAR_creds='${gcp}'"
-			echo "${terraform 'init'}"
-			def plan = terraform 'plan -out=plan.json'
-			input "${terraform 'show -json plan.json'}"
+			terraform 'init'
+			def plan = "<html><body><p>${terraform 'plan'}</p></body></html>"
+			writeFile file: "index.html", data: plan
 		}
+	}
+	stage('confirm') {
+		archive (includes: 'pkg/*.gem')
+		publishHTML (target: [
+			allowMissing: false,
+			alwaysLinkToLastBuild: false,
+			keepAll: true,
+			reportDir: 'coverage',
+			reportFiles: 'index.html',
+			reportName: "RCov Report"
+		])
 	}
 }
