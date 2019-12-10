@@ -27,6 +27,8 @@ kubepipe {
 				tabCount -= 1
 			}
 		}
+		echo "${parsing}"
+		echo "${parsing.getClass()}"
 		writeFile file: 'index.html', text: parsing.join()
 		// writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>').replace('\\"','\"')}</body></html>"
 		publishHTML (target: [
