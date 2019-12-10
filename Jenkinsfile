@@ -25,7 +25,7 @@ kubepipe {
 	}
 	stage('Apply') {
 		input "Do you want to continue?\nView your planned infrastucture: ${BUILD_URL}Plan"
-		terraform 'apply myplan -auto-approve'
+		terraform 'apply -auto-approve myplan'
 	}
 	stage('Destroy') {
 		input 'Destroy now?'
