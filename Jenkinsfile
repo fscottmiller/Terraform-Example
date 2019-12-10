@@ -15,14 +15,14 @@ kubepipe {
 		}
 	}
 	stage('confirm') {
-		archive (includes: 'pkg/*.gem')
+		// archive (includes: 'pkg/*.gem')
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
 			keepAll: true,
-			reportDir: 'coverage',
+			reportDir: '',
 			reportFiles: 'index.html',
-			reportName: "RCov Report"
+			reportName: "Plan"
 		])
 	}
 }
