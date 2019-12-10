@@ -6,6 +6,11 @@ def jsonToHtml(json, text="") {
 		text = "<html><body><p>"
 	}
 	echo "${json.getClass()}"
+	json.each {
+		echo "${it.getClass()}"
+	}
+	text += "</p></body></html>"
+	return text
 	// switch(json.getClass()) {
 	// 	case ''
 	// }
