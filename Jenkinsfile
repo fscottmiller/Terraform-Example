@@ -5,6 +5,7 @@ initialize this
 
 kubepipe {
 	stage('tf plan') {
+		git
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
 			sh "set TF_VAR_project=ordinal-motif-254101"
 			echo "${gcp}"
