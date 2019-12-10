@@ -15,6 +15,7 @@ def jsonToHtml(json) {
 	</body>
 </html>
 """
+	return html
 }
 
 require 'terraform'
