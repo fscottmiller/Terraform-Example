@@ -1,15 +1,15 @@
-provider "google" {
-  credentials = var.creds
-  project     = var.project
-  region      = "us-central1"
-}
-
 variable "project" {
   type = string
 }
 
 variable "creds" {
   type = string
+}
+
+provider "google" {
+  credentials = "${file("${var.creds}")}"
+  project     = var.project
+  region      = "us-central1"
 }
 
 resource "google_container_cluster" "primary" {
