@@ -6,8 +6,8 @@ def jsonToHtml(json, text="") {
 		text = "<html><body><p>"
 	}
 	echo "${json.getClass()}"
-	json.each {
-		echo "${it.getClass()}"
+	json.each -> key, value {
+		echo "${key} : ${value}"
 	}
 	text += "</p></body></html>"
 	return text
