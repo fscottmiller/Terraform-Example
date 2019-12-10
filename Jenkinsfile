@@ -1,19 +1,17 @@
 @Library('jenkins-ext@master') _
 import groovy.json.JsonOutput
 
-def jsonToHtml(json, text="") {
-	if (text == "") {
-		text = "<html><body><p>"
+def jsonToHtml(json, l=0) {
+	def text = ""
+	if (json.getClass() == String) {
+		text += "${json}\n"
+	} else {
+		json.each { key, value ->
+			text += "${l*'\t'}${key}:\n"
+			text += jsonToHtml(value, l+1)
+		}
 	}
-	echo "${json.getClass()}"
-	json.each { key, value ->
-		echo "${key} : ${value}"
-	}
-	text += "</p></body></html>"
 	return text
-	// switch(json.getClass()) {
-	// 	case ''
-	// }
 }
 
 require 'terraform'
