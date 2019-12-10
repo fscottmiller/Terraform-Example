@@ -15,6 +15,9 @@ kubepipe {
 		def plan = readJSON text: terraform('show -json myplan')
 		writeJSON file: 'index.html', json: plan['resource_changes'], pretty: 1
 		def html = "<html><body>${readFile file: 'index.html'}</body></html>"
+		html.each {
+			println it
+		}
 		html = html.replace("\n","<br>")
 		def parsing = html.split("<br>")
 		def tabCount = 0
