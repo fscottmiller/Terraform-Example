@@ -10,7 +10,8 @@ kubepipe {
 			sh "set TF_VAR_project=ordinal-motif-254101"
 			sh "set TF_VAR_creds='${gcp}'"
 			terraform 'init'
-			def plan = "<html><body><p>${terraform 'plan'}</p></body></html>"
+			terraform 'plan -out=myplan'
+			def plan = "<html><body><p>${terraform 'show -json myplan'}</p></body></html>"
 			writeFile file: "index.html", text: plan
 		}
 	}
