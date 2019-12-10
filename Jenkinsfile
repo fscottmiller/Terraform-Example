@@ -26,6 +26,9 @@ kubepipe {
 		])
 	}
 	stage('confirm') {
-		input "Do you want to continue?\nView your planned infrastucture: ${JENKINS_URL}${BUILD_URL.split('8080/')[1]}Plan"
+		input "Do you want to continue?\nView your planned infrastucture: ${BUILD_URL}Plan"
+
+		def plan = terraform 'show -json myplan'
+		input "Do you want to continue?\n${plan}"
 	}
 }
