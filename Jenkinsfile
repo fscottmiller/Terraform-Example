@@ -5,6 +5,6 @@ initialize this
 
 kubepipe {
 	stage('get tf version') {
-		terraform '--version'
+		echo "${terraform '--version'}"
 	}
 }
