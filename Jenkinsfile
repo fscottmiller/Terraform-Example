@@ -32,10 +32,11 @@ kubepipe {
 			def plan = terraform('show -json myplan')
 			def html = jsonToHtml(readJSON(text: plan))
 			writeFile file: "index.html", text: html
+			sh 'cat index.html'
 		}
 	}
 	stage('confirm') {
-		// archive (includes: 'pkg/*.gem')
+		sh 'cat index.html'
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
