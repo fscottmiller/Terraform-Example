@@ -29,8 +29,8 @@ kubepipe {
 			sh "set TF_VAR_creds='${gcp}'"
 			terraform 'init'
 			terraform 'plan -out=myplan'
-			def plan = terraform('show -json myplan')
-			def html = jsonToHtml(readJSON(text: plan))
+			def plan = terraform 'show -json myplan'
+			def html = jsonToHtml plan
 			writeFile file: "index.html", text: html
 			sh 'cat index.html'
 		}
