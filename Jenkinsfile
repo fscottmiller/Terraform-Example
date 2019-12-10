@@ -1,22 +1,14 @@
 @Library('jenkins-ext@master') _
 import groovy.json.JsonOutput
 
-def jsonToHtml(json) {
-// 	def html = """
-// <html>
-// 	<body>
-// 		<div id='test'></div>
-// 		<script type='text/javascript' src='https://raw.githubusercontent.com/caldwell/renderjson/master/renderjson.js'>
-// 		<script>
-// 			document.getElementById("test").appendChild(
-// 				renderjson(${json})
-// 			);
-// 		</script>
-// 	</body>
-// </html>
-// """
-	def html = "<html><body><p>${json}</p></body></html>"
-	return html
+def jsonToHtml(json, text="") {
+	if (text == "") {
+		text = "<html><body><p>"
+	}
+	echo json.getClass()
+	// switch(json.getClass()) {
+	// 	case ''
+	// }
 }
 
 require 'terraform'
@@ -31,7 +23,7 @@ kubepipe {
 			terraform 'init'
 			terraform 'plan -out=myplan'
 			def plan = terraform 'show -json myplan'
-			def html = jsonToHtml(plan)
+			def html = jsonToHtml(readJson(plan))
 			writeFile file: "index.html", text: html
 			sh 'cat index.html'
 		}
