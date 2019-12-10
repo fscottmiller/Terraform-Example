@@ -1,4 +1,4 @@
-@Library('jenkins-ext@master') _
+@Library('jenkins-ext@addShellLabels') _
 
 require 'terraform'
 initialize this
