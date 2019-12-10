@@ -5,7 +5,7 @@ def jsonToHtml(json, text="") {
 	if (text == "") {
 		text = "<html><body><p>"
 	}
-	echo json.getClass()
+	echo "${json.getClass()}"
 	// switch(json.getClass()) {
 	// 	case ''
 	// }
