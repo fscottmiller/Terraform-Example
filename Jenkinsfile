@@ -15,7 +15,7 @@ kubepipe {
 			writeFile file: "index.html", text: "<html><body>${plan}</body></html>"
 		}
 	}
-	stage('confirm') {
+	stage('report') {
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
@@ -24,5 +24,8 @@ kubepipe {
 			reportFiles: 'index.html',
 			reportName: "Plan"
 		])
+	}
+	stage('confirm') {
+		input "Do you want to continue?\nView your planned infrastucture: ${BUILD_URL}/Plan"
 	}
 }
