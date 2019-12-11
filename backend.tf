@@ -2,7 +2,6 @@ terraform {
   backend "gcs" {
     bucket  = "terraform-state-test"
     prefix  = "test"
-    credentials = "gcp.json"
   }
 }
 
@@ -11,5 +10,6 @@ data "terraform_remote_state" "foo" {
   config = {
     bucket  = "terraform-state-test"
     prefix  = "test"
+    credentials = var.creds
   }
 }
