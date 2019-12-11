@@ -10,6 +10,6 @@ data "terraform_remote_state" "foo" {
   config = {
     bucket  = "terraform-state-test"
     prefix  = "test"
-    credentials = var.creds
+    credentials = var.backendCreds
   }
 }
