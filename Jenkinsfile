@@ -28,12 +28,12 @@ kubepipe {
 		])
 	}
 	stage('Apply') {
+		input "Do you want to continue?\nView your planned infrastucture:\n${BUILD_URL}Plan"
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
 			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
 				terraform 'apply -auto-approve myplan'
 			}
 		}
-		input "Do you want to continue?\nView your planned infrastucture:\n${BUILD_URL}Plan"
 	}
 	stage('Destroy') {
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
