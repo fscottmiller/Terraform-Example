@@ -33,7 +33,7 @@ kubepipe {
 	}
 	stage('Destroy') {
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${readFile file: gcp}", "TF_VAR_backendCreds=${gcp}"]) {
+			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
 				input 'Destroy now?'
 				terraform 'destroy -auto-approve'
 			}
