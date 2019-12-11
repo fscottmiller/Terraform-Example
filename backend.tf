@@ -1,3 +1,7 @@
+variable "backendCreds" {
+  type = string
+}
+
 terraform {
   backend "gcs" {
     bucket  = "terraform-state-test"
