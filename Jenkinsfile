@@ -8,7 +8,7 @@ kubepipe {
 		def plan
 		git url: "https://github.com/fscottmiller/Terraform-Example"
 		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${readFile file: gcp}", "TF_VAR_backendCreds=${gcp}"]) {
+			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
 				terraform "init -backend-config 'credentials=${gcp}'"
 				terraform 'plan -out=myplan'
 				plan = readJSON text: terraform('show -json myplan')

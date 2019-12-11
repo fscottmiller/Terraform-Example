@@ -1,3 +1,4 @@
 gcp.json
 .terraform
 *tfstate*
+myplan
