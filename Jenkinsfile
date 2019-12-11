@@ -17,21 +17,6 @@ kubepipe {
 		writeJSON file: 'index.html', json: plan, pretty: 4
 		def html = "<pre>${readFile file: 'index.html'}</pre>"
 		writeFile file: 'index.html', text: html
-		// def html = "<html><body>${readFile file: 'index.html'}</body></html>"
-		// // html = html.replace("\n","<br>")
-		// def parsing = html.split("\n")
-		// def tabCount = 0
-		// parsing.each {
-		// 	it = "  "*tabCount + parsing
-		// 	if (parsing.contains("{")) {
-		// 		tabCount += 1
-		// 	}
-		// 	if (parsing.contains("}")) {
-		// 		tabCount -= 1
-		// 	}
-		// }
-		// writeFile file: 'index.html', text: parsing.join("<br>")
-		// writeFile file: "index.html", text: "<html><body>${plan.replace('\\n','<br>').replace('\\"','\"')}</body></html>"
 		publishHTML (target: [
 			allowMissing: false,
 			alwaysLinkToLastBuild: false,
