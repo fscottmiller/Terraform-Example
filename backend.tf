@@ -1,7 +1,3 @@
-variable "backendCreds" {
-  type = string
-}
-
 terraform {
   backend "gcs" {
     bucket  = "terraform-state-test"
@@ -14,6 +10,6 @@ data "terraform_remote_state" "foo" {
   config = {
     bucket  = "terraform-state-test"
     prefix  = "test"
-    credentials = var.backendCreds
+    credentials = var.creds
   }
 }

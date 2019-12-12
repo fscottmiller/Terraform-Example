@@ -5,7 +5,7 @@ initialize this
 
 kubepipe {
 	withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-		withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
+		withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}"]) {
 			stage('Apply') {
 				def plan
 				git url: "https://github.com/fscottmiller/Terraform-Example"
