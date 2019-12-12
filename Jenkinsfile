@@ -4,11 +4,11 @@ require 'terraform'
 initialize this
 
 kubepipe {
-	stage('Apply') {
-		def plan
-		git url: "https://github.com/fscottmiller/Terraform-Example"
-		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
+	withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
+		withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
+			stage('Apply') {
+				def plan
+				git url: "https://github.com/fscottmiller/Terraform-Example"
 				terraform "init -backend-config 'credentials=${gcp}'"
 				terraform 'plan -out=myplan'
 				plan = readJSON text: terraform('show -json myplan')
@@ -27,11 +27,7 @@ kubepipe {
 				input "Do you want to continue?\nView your planned infrastucture:\n${BUILD_URL}Plan"
 				terraform 'apply -auto-approve myplan'
 			}
-		}
-	}
-	stage('Destroy') {
-		withCredentials([file(credentialsId: 'gcp', variable: 'gcp')]) {
-			withEnv(["TF_VAR_project=ordinal-motif-254101", "TF_VAR_creds=${gcp}", "TF_VAR_backendCreds=${gcp}"]) {
+			stage('Destroy') {
 				input 'Destroy now?'
 				terraform 'destroy -auto-approve'
 			}
